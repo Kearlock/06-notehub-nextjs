@@ -11,8 +11,7 @@ interface Props {
 }
 
 export default async function NoteDetailsPage({ params }: Props) {
-  params = await Promise.resolve(params);
-  const id = String(params.id);
+  const { id } = await params;
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
