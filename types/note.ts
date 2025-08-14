@@ -1,5 +1,5 @@
 export interface Note {
-  id: number;
+  id: string;
   title: string;
   content: string;
   tag: NoteTag;
@@ -8,3 +8,10 @@ export interface Note {
 }
 
 export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+
+export interface FetchNotesResponse {
+  notes: Note[];
+  page: number;
+  perPage: number;
+  totalPages: number;
+}
