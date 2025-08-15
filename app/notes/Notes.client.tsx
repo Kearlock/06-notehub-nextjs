@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchNotes } from "@/lib/api";
 import { useDebounce } from "use-debounce";
-import type { FetchNotesResponse } from "@/types/note";
+import type { Note } from "@/types/note";
 import css from "./NotesPage.module.css";
 import NoteList from "@/components/NoteList/NoteList";
 import SearchBox from "@/components/SearchBox/SearchBox";
@@ -14,27 +14,23 @@ import NoteForm from "@/components/NoteForm/NoteForm";
 import Loader from "@/components/Loader/Loader";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 
-// type FetchNotesResponse = {
-//   notes: Note[];
-//   page: number;
-//   perPage: number;
-//   totalPages: number;
-//   totalNotes?: number;
-// };
+type FetchNotesResponse = {
+  notes: Note[];
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalNotes?: number;
+};
 
 type Props = {
   initialData: FetchNotesResponse;
-  initialPage: number;
-  initialSearch: string;
+  // page: number;
+  // search: string;
 };
 
-export default function NotesClient({
-  initialData,
-  initialPage,
-  initialSearch,
-}: Props) {
-  const [page, setPage] = useState(initialPage);
-  const [search, setSearch] = useState(initialSearch);
+export default function NotesClient({ initialData }: Props) {
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [debouncedSearch] = useDebounce(search, 500);
@@ -44,10 +40,11 @@ export default function NotesClient({
     queryKey: ["notes", page, debouncedSearch],
     queryFn: () => fetchNotes({ page, perPage: 12, search: debouncedSearch }),
     initialData,
+    placeholderData: initialData,
   });
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
+  const handleSearchChange = (newSearch: string) => {
+    setSearch(newSearch);
     setPage(1);
   };
 

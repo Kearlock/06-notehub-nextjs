@@ -9,9 +9,9 @@ export interface Note {
 
 export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
 
-export interface FetchNotesResponse {
-  notes: Note[];
-  page: number;
-  perPage: number;
-  totalPages: number;
-}
+// export interface FetchNotesResponse {
+//   notes: Note[];
+//   page: number;
+//   perPage: number;
+//   totalPages: number;
+// }

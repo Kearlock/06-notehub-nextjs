@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Note, NoteTag, FetchNotesResponse } from "@/types/note.ts";
+import type { Note, NoteTag } from "@/types/note.ts";
 
 const API_BASE_URL = "https://notehub-public.goit.study/api";
 const NOTES_ENDPOINT = "/notes";
@@ -20,10 +20,13 @@ interface FetchNotesParams {
   perPage?: number;
 }
 
-// interface FetchNotesResponse {
-//   notes: Note[];
-//   totalPages: number;
-// }
+type FetchNotesResponse = {
+  notes: Note[];
+  page: number;
+  perPage: number;
+  totalPages: number;
+  totalNotes?: number;
+};
 
 export const fetchNotes = async ({
   page = 1,
